@@ -44,6 +44,7 @@ import {
   defineEmits, onMounted, onBeforeUnmount, ref, computed,
 } from 'vue';
 import { useRouter } from 'vue-router';
+import M from 'materialize-css';
 
 const emit = defineEmits(['toggleNavbar']);
 
@@ -74,7 +75,6 @@ const logout = () => {
 };
 
 onMounted(() => {
-  // eslint-disable-next-line no-undef
   M.Dropdown.init(dropdown.value, {
     constantWidth: true,
   });
