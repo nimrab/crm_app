@@ -3,6 +3,7 @@ import { MessagePlugin, ErrorMessagePlugin } from '@/utils/message';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import CommonLoader from './components/app/CommonLoader.vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -31,6 +32,7 @@ firebase.auth().onAuthStateChanged(() => {
     app.use(router);
     app.use(MessagePlugin);
     app.use(ErrorMessagePlugin);
+    app.component('CommonLoader', CommonLoader);
     app.mount('#app');
   }
 });

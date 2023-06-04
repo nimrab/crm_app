@@ -86,8 +86,15 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email } from '@vuelidate/validators';
+import M from 'materialize-css';
+import messages from '@/utils/messages';
+
+const router = useRouter();
+const store = useStore();
 
 required.$message = 'Обязательное поле';
 
@@ -118,7 +125,13 @@ const submit = async () => {
       password: v$.value.password.$model,
       name: v$.value.name.$model,
     };
-    console.log(registerData);
+    try {
+      await store.dispatch('auth/register', registerData);
+      await router.push('/login');
+      M.toast({ html: messages.successRegister });
+    } catch {
+      M.toast({ html: messages.errorRegister });
+    }
   }
 };
 

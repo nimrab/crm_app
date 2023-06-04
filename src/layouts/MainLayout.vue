@@ -21,7 +21,10 @@
 <script setup>
 import SideBar from '@/components/app/SideBar.vue';
 import NavBar from '@/components/app/NavBar.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const isNavbarOpen = ref(true);
 
@@ -30,6 +33,14 @@ const toggleNavbar = () => {
 };
 
 const mainClass = computed(() => (isNavbarOpen.value ? ['app-content'] : ['app-content', 'full']));
+
+const fetchUserInfo = async () => {
+  await store.dispatch('info/getUserInfo');
+};
+
+onMounted(() => {
+  fetchUserInfo();
+});
 
 </script>
 

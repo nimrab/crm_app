@@ -16,7 +16,7 @@
             data-target="dropdown"
             ref="dropdown"
           >
-            USER NAME
+            {{ userName }}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -28,9 +28,9 @@
             </li>
             <li class="divider" tabindex="-1"></li>
             <li>
-              <router-link to="/login?message=logout" class="black-text">
+              <a href="#" class="black-text" @click.prevent="logout">
                 <i class="material-icons">assignment_return</i>Выйти
-              </router-link>
+              </a>
             </li>
           </ul>
         </li>
@@ -44,11 +44,14 @@ import {
   defineEmits, onMounted, onBeforeUnmount, ref, computed,
 } from 'vue';
 import { useRouter } from 'vue-router';
+
 import M from 'materialize-css';
+import { useStore } from 'vuex';
 
 const emit = defineEmits(['toggleNavbar']);
 
 const router = useRouter();
+const store = useStore();
 
 const dropdown = ref(null);
 const date = ref(new Date());
@@ -66,12 +69,16 @@ const formattedDate = computed(() => {
   return new Intl.DateTimeFormat('ru-RU', options).format(date.value);
 });
 
+const userName = computed(() => store.getters['info/userName']);
+
 const toggleNavbar = () => {
   emit('toggleNavbar');
 };
 
-const logout = () => {
-  router.push('/login?message=logout');
+const logout = async () => {
+  store.commit('info/resetUserInfo');
+  await store.dispatch('auth/logout');
+  await router.push('/login?message=logout');
 };
 
 onMounted(() => {
