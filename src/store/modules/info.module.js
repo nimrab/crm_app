@@ -1,5 +1,3 @@
-import firebase from 'firebase/compat/app';
-
 import {
   getDatabase, ref, get,
 } from 'firebase/database';
@@ -37,16 +35,11 @@ export default {
   },
 
   actions: {
-    getUid() {
-      const user = firebase.auth().currentUser;
-      return user ? user.uid : null;
-    },
-
     async getUserInfo({
       dispatch,
       commit,
     }) {
-      const userUid = await dispatch('getUid');
+      const userUid = await dispatch('getUid', {}, { root: true });
       const db = getDatabase();
       const snapshot = await get(ref(db, `users/${userUid}/info`));
       const user = snapshot.val();

@@ -72,7 +72,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
+const categories = computed(() => store.getters['category/getCategories']);
+
+onMounted(async () => {
+  await store.dispatch('category/fetchCategories');
+});
 
 </script>
 
