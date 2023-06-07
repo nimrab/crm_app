@@ -11,6 +11,7 @@
             v-model="selectedCategory"
             id="select"
             class="category-selector"
+            ref="select"
           >
             <option
               :value="undefined"
@@ -76,7 +77,7 @@
 
 <script setup>
 import {
-  computed, watch, defineProps, ref, reactive,
+  computed, watch, defineProps, ref, reactive, onMounted,
 } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
@@ -88,6 +89,8 @@ const props = defineProps(['userCategories']);
 const store = useStore();
 
 required.$message = 'Обязательное поле';
+
+const select = ref(null);
 
 const state = reactive({
   name: '',
@@ -131,10 +134,12 @@ const submit = async () => {
   }
 };
 
+onMounted(() => {
+  M.FormSelect.init(select.value, categoriesOptions.value);
+});
+
 </script>
 
 <style scoped>
-.category-selector {
-  display: block;
-}
+
 </style>

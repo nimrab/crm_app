@@ -31,5 +31,7 @@ const sidebarClass = computed(() => (props.isOpen ? ['sidenav', 'app-sidenav', '
 </script>
 
 <style scoped>
-
+.router-link-exact-active {
+  background-color: #ccc;
+}
 </style>

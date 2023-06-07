@@ -3,14 +3,35 @@
     <div class="page-title">
       <h3>Новая запись</h3>
     </div>
-
-    <form class="form">
+    <CommonLoader v-if="isLoading"/>
+    <p
+      v-else-if="!categoriesOptions.length"
+      class="center"
+      >Категорий пока нет.
+      <router-link
+        :to="{name: 'categories'}"
+      >Добавить категорию</router-link>
+    </p>
+    <form class="form" v-else>
       <div>
         <label for="select">
           Выберите категорию
-          <select id="select">
+          <select
+            v-model="selectedCategory"
+            id="select"
+            ref="select"
+            class="category-selector"
+          >
             <option
-            >name cat</option>
+              :value="undefined"
+              selected
+            />
+            <option
+              v-for="cat in categoriesOptions"
+              :key="cat.id"
+              :value="cat.id">
+              {{cat.name}}
+            </option>
           </select>
         </label>
       </div>
@@ -73,19 +94,38 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import {
+  computed, onMounted, ref, watch, nextTick,
+} from 'vue';
 import { useStore } from 'vuex';
+import M from 'materialize-css';
+import messages from '@/utils/messages';
+import CommonLoader from '@/components/app/CommonLoader.vue';
 
 const store = useStore();
+const select = ref(null);
+const selectedCategory = ref(undefined);
+const isLoading = ref(false);
 
-const categories = computed(() => store.getters['category/getCategories']);
+const categoriesOptions = computed(() => store.getters['category/getCategories']);
 
 onMounted(async () => {
-  await store.dispatch('category/fetchCategories');
+  try {
+    isLoading.value = true;
+    await store.dispatch('category/fetchCategories');
+  } catch {
+    M.toast({ html: messages.errorCategoryUpdate });
+  } finally {
+    isLoading.value = false;
+  }
+
+  await nextTick(() => {
+    M.FormSelect.init(select.value, categoriesOptions.value);
+    M.updateTextFields();
+  });
 });
 
 </script>
 
 <style scoped>
-
 </style>
