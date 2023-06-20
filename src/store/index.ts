@@ -3,6 +3,7 @@ import firebase from 'firebase/compat/app';
 import auth from './modules/auth.module';
 import info from './modules/info.module';
 import category from './modules/category.module';
+import records from './modules/records.module';
 
 const plugins = [];
 
@@ -25,5 +26,6 @@ export default createStore({
     auth,
     info,
     category,
+    records,
   },
 });

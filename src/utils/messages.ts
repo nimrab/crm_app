@@ -7,4 +7,7 @@ export default {
   successCategoryEdit: 'Категория отредактирована успешно',
   errorCategoryCreate: 'Не удалось создать категорию',
   errorCategoryUpdate: 'Не удалось обновить категории',
+  successRecordCreate: 'Запись создана успешно',
+  errorRecordCreate: 'Не удалось создать запсись',
+  errorCategoryBill: 'Недостаточно средств на счете для создания записи',
 };

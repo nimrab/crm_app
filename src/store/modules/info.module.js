@@ -1,5 +1,5 @@
 import {
-  getDatabase, ref, get,
+  getDatabase, ref, get, set,
 } from 'firebase/database';
 
 export default {
@@ -8,7 +8,7 @@ export default {
     return {
       userInfo: {
         name: '',
-        bill: 0,
+        bill: null,
       },
 
     };
@@ -56,6 +56,20 @@ export default {
         referrerPolicy: 'same-origin',
       });
       return response.json();
+    },
+
+    async editUserBill({ commit, state, dispatch }, newBill) {
+      const userUid = await dispatch('getUid', {}, { root: true });
+      try {
+        const db = getDatabase();
+        await set(ref(db, `users/${userUid}/info`), {
+          name: state.userInfo.name,
+          bill: newBill,
+        });
+        await dispatch('info/getUserInfo');
+      } catch (err) {
+        throw new Error();
+      }
     },
   },
 };

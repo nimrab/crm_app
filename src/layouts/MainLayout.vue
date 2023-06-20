@@ -11,7 +11,7 @@
     </main>
 
     <div class="fixed-action-btn">
-      <router-link :to="{name: 'record'}" class="btn-floating btn-large blue">
+      <router-link :to="{name: 'record'}" class="btn-floating btn-large blue"  >
         <i class="large material-icons">add</i>
       </router-link>
     </div>
