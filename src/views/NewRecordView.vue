@@ -4,14 +4,14 @@
       <h3>Новая запись</h3>
     </div>
     <CommonLoader v-if="isLoading"/>
-    <p
-      v-else-if="!categoriesOptions.length"
-      class="center"
-      >Категорий пока нет.
-      <router-link
-        :to="{name: 'categories'}"
-      >Добавить категорию</router-link>
-    </p>
+      <p
+        v-else-if="!categoriesOptions.length"
+        class="center"
+        >Категорий пока нет.
+        <router-link
+          :to="{name: 'categories'}"
+        >Добавить категорию</router-link>
+      </p>
     <form class="form" v-else>
       <div>
         <label for="select">
