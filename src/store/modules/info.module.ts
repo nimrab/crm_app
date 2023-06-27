@@ -10,7 +10,6 @@ export default {
         name: '',
         bill: null,
       },
-
     };
   },
 

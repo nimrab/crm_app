@@ -14,18 +14,19 @@ export default {
 
   getters: {
     getRecords(state) {
-      return state.categories;
+      return state.records;
     },
   },
 
   mutations: {
-    setRecords(state, categories) {
-      state.records = Object.keys(categories).map((key) => ({
+    setRecords(state, records) {
+      state.records = Object.keys(records).map((key) => ({
         id: key,
-        type: categories[key].type,
-        amount: categories[key].amount,
-        description: categories[key].amount,
-        date: categories[key].amount,
+        amount: records[key].amount,
+        categoryId: records[key].categoryId,
+        date: records[key].date,
+        description: records[key].description,
+        type: records[key].type,
       }));
     },
   },
@@ -53,9 +54,9 @@ export default {
       const userUid = await dispatch('getUid', {}, { root: true });
       try {
         const db = getDatabase();
-        const snapshot = await get(ref(db, `users/${userUid}/category`));
-        const categories = snapshot.val();
-        // commit('setCategories', categories);
+        const snapshot = await get(ref(db, `users/${userUid}/records`));
+        const records = snapshot.val();
+        commit('setRecords', records);
       } catch (err) {
         throw new Error();
       }

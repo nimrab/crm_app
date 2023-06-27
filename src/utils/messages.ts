@@ -10,4 +10,5 @@ export default {
   successRecordCreate: 'Запись создана успешно',
   errorRecordCreate: 'Не удалось создать запсись',
   errorCategoryBill: 'Недостаточно средств на счете для создания записи',
+  errorDataFetch: 'Ошибка получения данных с сервера',
 };
