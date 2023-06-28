@@ -7,43 +7,54 @@
     <div class="history-chart">
       <canvas></canvas>
     </div>
-
-    <section>
-      <table>
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Сумма</th>
-          <th>Дата</th>
-          <th>Категория</th>
-          <th>Тип</th>
-          <th>Открыть</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr>
-          <td>1</td>
-          <td>1212</td>
-          <td>12.12.32</td>
-          <td>name</td>
-          <td>
-            <span class="white-text badge red">Расход</span>
-          </td>
-          <td>
-            <button class="btn-small btn">
-              <i class="material-icons">open_in_new</i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <CommonLoader v-if="loading"/>
+    <p
+      v-else-if="!records.length"
+      class="center"
+    >Записей пока нет.
+    <router-link to="/record">Добавить запись</router-link>
+    </p>
+    <section v-else >
+      <HistoryTableView
+        :records="tableRecords"
+      />
     </section>
   </div>
 </template>
 
-<script>
+<script setup>
+import HistoryTableView from '@/views/HistoryTableView.vue';
+import { onMounted, ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import M from 'materialize-css';
+import messages from '@/utils/messages';
+import CommonLoader from '@/components/app/CommonLoader.vue';
 
+const store = useStore();
+
+const loading = ref(false);
+
+const categories = computed(() => store.getters['category/getCategories']);
+const records = computed(() => store.getters['records/getRecords']);
+
+const tableRecords = computed(() => records.value.map((record) => ({
+  ...record,
+  categoryName: categories.value.find((c) => c.id === record.categoryId)?.name ?? '',
+  typeClass: record.type === 'income' ? 'green' : 'red',
+  typeText: record.type === 'income' ? 'Доход' : 'Расход',
+})));
+
+onMounted(async () => {
+  try {
+    loading.value = true;
+    await store.dispatch('category/fetchCategories');
+    await store.dispatch('records/fetchRecords');
+  } catch {
+    M.toast({ html: messages.errorDataFetch });
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
 
 <style scoped>

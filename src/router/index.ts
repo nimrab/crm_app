@@ -57,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/detail-record',
+    path: '/detail-record/:id',
     name: 'detail-record',
     component: () => import('../views/DetailRecordView.vue'),
     meta: {
