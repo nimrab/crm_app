@@ -57,7 +57,7 @@ export default {
       return response.json();
     },
 
-    async editUserBill({ commit, state, dispatch }, newBill) {
+    async editUserBill({ state, dispatch }, newBill) {
       const userUid = await dispatch('getUid', {}, { root: true });
       try {
         const db = getDatabase();

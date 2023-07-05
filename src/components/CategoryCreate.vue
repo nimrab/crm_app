@@ -54,13 +54,11 @@
 <script setup>
 import { reactive, defineEmits } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import M from 'materialize-css';
 import messages from '@/utils/messages';
 
-const router = useRouter();
 const store = useStore();
 
 const emits = defineEmits(['createCategory']);

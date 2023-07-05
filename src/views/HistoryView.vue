@@ -5,7 +5,7 @@
     </div>
 
     <div class="history-chart">
-      <canvas></canvas>
+      <PieChart :categories="categories" :records="records"/>
     </div>
     <CommonLoader v-if="loading"/>
     <p
@@ -29,6 +29,7 @@ import { useStore } from 'vuex';
 import M from 'materialize-css';
 import messages from '@/utils/messages';
 import CommonLoader from '@/components/app/CommonLoader.vue';
+import PieChart from '@/components/PieChart.vue';
 
 const store = useStore();
 

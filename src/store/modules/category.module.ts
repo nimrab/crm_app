@@ -54,7 +54,7 @@ export default {
       }
     },
 
-    async editCategory({ commit, dispatch }, { categoryId, name, limit }) {
+    async editCategory({ dispatch }, { categoryId, name, limit }) {
       const userUid = await dispatch('getUid', {}, { root: true });
       try {
         const db = getDatabase();

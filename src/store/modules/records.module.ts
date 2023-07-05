@@ -1,7 +1,7 @@
 import {
   get,
   getDatabase, ref,
-  push, set,
+  push,
 } from 'firebase/database';
 
 export default {
@@ -57,6 +57,18 @@ export default {
         const snapshot = await get(ref(db, `users/${userUid}/records`));
         const records = snapshot.val();
         commit('setRecords', records);
+      } catch (err) {
+        throw new Error();
+      }
+    },
+
+    async fetchRecordById({ dispatch }, recordId) {
+      const userUid = await dispatch('getUid', {}, { root: true });
+      try {
+        const db = getDatabase();
+        const snapshot = await get(ref(db, `users/${userUid}/records/${recordId}`));
+        const record = snapshot.val();
+        return record || null;
       } catch (err) {
         throw new Error();
       }

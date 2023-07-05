@@ -23,7 +23,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 import HomeBill from '@/components/HomeBill.vue';
@@ -32,7 +32,7 @@ import HomeCurrency from '@/components/HomeCurrency.vue';
 const store = useStore();
 
 const isLoading = ref(false);
-const rates = ref<any>(null);
+const rates = ref(null);
 
 const baseCurrency = computed(() => (rates.value?.base ? rates.value?.base : ''));
 

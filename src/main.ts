@@ -3,6 +3,7 @@ import { MessagePlugin, ErrorMessagePlugin } from '@/utils/message';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import Paginate from 'vuejs-paginate';
 import tooltipDirective from './directives/tooltip.directive';
 import CommonLoader from './components/app/CommonLoader.vue';
 import App from './App.vue';
@@ -35,6 +36,7 @@ firebase.auth().onAuthStateChanged(() => {
     app.use(ErrorMessagePlugin);
     app.directive('tooltip', tooltipDirective);
     app.component('CommonLoader', CommonLoader);
+    app.component('PaginateBlock', Paginate);
     app.mount('#app');
   }
 });
