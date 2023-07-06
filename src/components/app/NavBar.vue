@@ -22,7 +22,7 @@
 
           <ul id='dropdown' class='dropdown-content'>
             <li>
-              <a href="#" class="black-text" @click.prevent="logout">
+              <a href="#" class="black-text" @click.prevent="profile">
                 <i class="material-icons">account_circle</i>Профиль
               </a>
             </li>
@@ -79,6 +79,10 @@ const logout = async () => {
   store.commit('info/resetUserInfo');
   await store.dispatch('auth/logout');
   await router.push('/login?message=logout');
+};
+
+const profile = () => {
+  router.push({ name: 'profile' });
 };
 
 onMounted(() => {

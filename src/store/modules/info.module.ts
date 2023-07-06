@@ -9,6 +9,7 @@ export default {
       userInfo: {
         name: '',
         bill: null,
+        locale: 'RU-ru',
       },
     };
   },
@@ -20,12 +21,16 @@ export default {
     userBill(state) {
       return state.userInfo.bill;
     },
+    userLocale(state) {
+      return state.locale;
+    },
   },
 
   mutations: {
     setUserInfo(state, user) {
       state.userInfo.name = user.name ?? '';
       state.userInfo.bill = user.bill ?? 0;
+      state.userInfo.locale = user.locale ?? 'RU-ru';
     },
     resetUserInfo(state) {
       state.userInfo.name = '';
@@ -62,8 +67,36 @@ export default {
       try {
         const db = getDatabase();
         await set(ref(db, `users/${userUid}/info`), {
-          name: state.userInfo.name,
+          ...state.userInfo,
           bill: newBill,
+        });
+        await dispatch('info/getUserInfo');
+      } catch (err) {
+        throw new Error();
+      }
+    },
+
+    async editUserName({ state, dispatch }, name) {
+      const userUid = await dispatch('getUid', {}, { root: true });
+      try {
+        const db = getDatabase();
+        await set(ref(db, `users/${userUid}/info`), {
+          ...state.userInfo,
+          name,
+        });
+        await dispatch('info/getUserInfo');
+      } catch (err) {
+        throw new Error();
+      }
+    },
+
+    async editUserLocale({ state, dispatch }, locale) {
+      const userUid = await dispatch('getUid', {}, { root: true });
+      try {
+        const db = getDatabase();
+        await set(ref(db, `users/${userUid}/info`), {
+          ...state.userInfo,
+          locale,
         });
         await dispatch('info/getUserInfo');
       } catch (err) {

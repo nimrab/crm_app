@@ -5,10 +5,12 @@ export default {
   successRegister: 'Вы успешно зарегистрированы. Используйте логин и пароль для входа',
   successCategoryCreate: 'Категория создана успешно',
   successCategoryEdit: 'Категория отредактирована успешно',
+  successProfileChange: 'Профиль обновлен',
   errorCategoryCreate: 'Не удалось создать категорию',
   errorCategoryUpdate: 'Не удалось обновить категории',
   successRecordCreate: 'Запись создана успешно',
   errorRecordCreate: 'Не удалось создать запсись',
   errorCategoryBill: 'Недостаточно средств на счете для создания записи',
   errorDataFetch: 'Ошибка получения данных с сервера',
+  errorProfileChange: 'Ошибка обновления профиля',
 };
